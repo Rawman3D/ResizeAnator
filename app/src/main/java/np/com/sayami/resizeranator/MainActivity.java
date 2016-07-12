@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ref = (R.drawable.david);
+        ref = (R.drawable.budo);
         imageView = (ImageView) findViewById(R.id.imageView);
-        imageView.setImageResource(R.drawable.david);
+        imageView.setImageResource(R.drawable.budo);
         xPos = (EditText) findViewById(R.id.getXpos);
         yPos = (EditText) findViewById(R.id.getYpos);
         winSize = (EditText) findViewById(R.id.getWinSize);
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         y=Integer.parseInt(yPos.getText().toString());
         size=Integer.parseInt(winSize.getText().toString());
 
-        Bitmap getBmp = BitmapFactory.decodeResource(getResources(),R.drawable.david);
+        Bitmap getBmp = BitmapFactory.decodeResource(getResources(),R.drawable.budo);
 
         Bitmap croppedBitmap=Bitmap.createBitmap(getBmp, x,y,size, size);
 
@@ -51,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
         Bitmap resizedBitmap19x19=getResizedBitmap(croppedBitmap,19,19);
 
+        Log.i("TAG",Integer.toString(resizedBitmap19x19.getWidth()));
+        Log.i("TAG",Integer.toString(resizedBitmap19x19.getHeight()));
+        tempBmp=resizedBitmap19x19;
         imageView.setImageBitmap(resizedBitmap19x19);
 
     }
@@ -67,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         y=Integer.parseInt(yPos.getText().toString());
         size=Integer.parseInt(winSize.getText().toString());
 
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.drawable.david);
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.drawable.budo);
         Paint paint = new Paint();
         paint.setColor(Color.BLUE);
         paint.setStrokeWidth(5);
@@ -96,7 +99,9 @@ public class MainActivity extends AppCompatActivity {
         // "RECREATE" THE NEW BITMAP
         Bitmap resizedBitmap = Bitmap.createBitmap(
                 bm, 0, 0, width, height, matrix, false);
-        bm.recycle();
+        Log.i("TAG",Integer.toString(resizedBitmap.getWidth()));
+        Log.i("TAG",Integer.toString(resizedBitmap.getHeight()));
+//        bm.recycle();
         return resizedBitmap;
     }
 
