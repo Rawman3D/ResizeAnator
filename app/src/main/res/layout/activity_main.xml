@@ -10,8 +10,8 @@
     tools:context="np.com.sayami.resizeranator.MainActivity">
 
     <ImageView
-        android:layout_width="320dp"
-        android:layout_height="320dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:id="@+id/imageView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -90,4 +90,13 @@
         android:layout_alignBottom="@+id/drawButton"
         android:layout_toEndOf="@+id/getYpos"
         android:onClick="drawFilter" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycle_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/skinButton"
+        ></android.support.v7.widget.RecyclerView>
+
 </RelativeLayout>

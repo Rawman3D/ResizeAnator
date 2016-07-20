@@ -11,16 +11,24 @@ import android.graphics.drawable.BitmapDrawable;
 import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     ImageView imageView;
     EditText xPos, yPos, winSize;
     TextView txtV;
+    private List<Movie> movieList = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private MoviesAdapter mAdapter;
     int ref;
     Bitmap tempBmp;
     @Override
@@ -34,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
         yPos = (EditText) findViewById(R.id.getYpos);
         winSize = (EditText) findViewById(R.id.getWinSize);
         txtV = (TextView) findViewById(R.id.textView);
+
+        mAdapter = new MoviesAdapter(movieList);
+        recyclerView = (RecyclerView) findViewById(R.id.recycle_list);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL,false);
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setAdapter(mAdapter);
+
+        prepareMovieData();
 
     }
 
@@ -160,5 +176,43 @@ public class MainActivity extends AppCompatActivity {
             }
 
         return nSkinPixels/(float)(tempBmp.getHeight()*tempBmp.getWidth()) > 0.4;
+    }
+
+    private void prepareMovieData() {
+        Movie movie = new Movie(R.drawable.kabaddi,"Loot", "Action, Comedy", "2013", (float) 4.2);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.kabaddi,"Kabadi", "Love, Comedy", "2014", (float) 4.5);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.warcraft,"Bhirkhe lai chinchas", "Unknown", "2015", (float) 2);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.warcraft,"Kabadi Kabadi", "Love, Comedy", "2016",(float) 3.8);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.kabaddi, "6 ekan 6", "Comedy", "2015", (float) 4);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.warcraft, "Pashupati Prasad", "Serious, Reality", "2016", (float) 4.6);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.warcraft, "WarCraft", "Animation, Fantasy", "2016", (float) 4.3);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.kabaddi, "Conjuring 2", "Horror", "2016", (float) 4);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.warcraft, "Minions", "Animation", "2014", (float) 4.4);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.kabaddi, "Iron Man", "Action & Adventure", "2008", (float) 3.8);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.warcraft, "Back to the Future", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
+
+        mAdapter.notifyDataSetChanged();
     }
 }
