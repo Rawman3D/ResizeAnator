@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Interpolator;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
@@ -64,6 +65,35 @@ public class MainActivity extends AppCompatActivity {
             txtV.setText("FAIL!!");
 
     }
+
+
+    public void drawFilter(View view){
+        int x,y,size;
+        x=Integer.parseInt(xPos.getText().toString());
+        y=Integer.parseInt(yPos.getText().toString());
+        size=Integer.parseInt(winSize.getText().toString());
+
+
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.drawable.budo);
+        Paint paint = new Paint();
+        paint.setColor(Color.BLUE);
+        paint.setStrokeWidth(5);
+        paint.setStyle(Paint.Style.STROKE);
+        //Add a png image
+        //histo budo 400,500,250
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.glass1);
+
+        Bitmap drawableBitmap = getResizedBitmap(bitmap,size*2,size*2);
+
+        Bitmap mutableBitmap = bmp.copy(Bitmap.Config.ARGB_8888, true);
+        Canvas canvas = new Canvas(mutableBitmap);
+        canvas.drawBitmap(drawableBitmap,x,y,null);
+
+        imageView.setImageBitmap(mutableBitmap);
+
+        tempBmp = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+    }
+
     public void drawRect(View view){
         int x,y,size;
         x=Integer.parseInt(xPos.getText().toString());
@@ -76,9 +106,13 @@ public class MainActivity extends AppCompatActivity {
         paint.setStrokeWidth(5);
         paint.setStyle(Paint.Style.STROKE);
 
+
+
+
         Bitmap mutableBitmap = bmp.copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(mutableBitmap);
         canvas.drawRect(x, y, x+size, y+size, paint);
+
 
         imageView.setImageBitmap(mutableBitmap);
 

@@ -81,4 +81,13 @@
         android:layout_alignBottom="@+id/resizeButton"
         android:layout_toEndOf="@+id/getXpos"
         android:onClick="drawRect" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filter"
+        android:id="@+id/drawFilter"
+        android:layout_alignBottom="@+id/drawButton"
+        android:layout_toEndOf="@+id/getYpos"
+        android:onClick="drawFilter" />
 </RelativeLayout>
