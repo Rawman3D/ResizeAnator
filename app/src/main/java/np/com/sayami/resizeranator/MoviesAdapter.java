@@ -54,7 +54,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
             if(v instanceof ImageView){
                 mClicks.clickOnImage((ImageView) v, getLayoutPosition());
             } else {
-                mClicks.clickOnRow(v);
+                mClicks.clickOnRow(v,getLayoutPosition());
             }
         }
 
@@ -66,7 +66,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
 
     public static interface MyClicks{
         public void clickOnImage(ImageView imgView, int pos);
-        public void clickOnRow(View info);
+        public void clickOnRow(View info, int position);
     }
 
 
@@ -81,7 +81,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
      * **/
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
+        final View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_layout, parent, false);
 
         MoviesAdapter.MyViewHolder myViewHolder = new MyViewHolder(itemView, new MoviesAdapter.MyClicks() {
@@ -89,13 +89,22 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
             //Clicks for interaction.
             public void clickOnImage(ImageView imgView,int pos){
                 Movie movie = moviesList.get(pos);
+                //movie.getImgSrc();
                 Toast.makeText(context,"Image Click",Toast.LENGTH_SHORT).show();
                 Log.d("Rating ","The click works");
-            }
 
-            public void clickOnRow(View info){
+                }
+
+            public void clickOnRow(View info, int position){
+                itemView.setTag(position);
                 Toast.makeText(context,"Whole row clicked",Toast.LENGTH_SHORT).show();
-                Log.d("Movie Adapter","The Second click also works");
+                Log.d("RSA","The Second click also works");
+                try{
+                    ((MainActivity) info.getContext()).moviePicked(itemView);
+                    Log.d("RSA","Working");
+                } catch (Exception e){
+                    Log.d("RSA","Not Working");
+                }
             }
         });
 

@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private List<Movie> movieList = new ArrayList<>();
     private RecyclerView recyclerView;
     private MoviesAdapter mAdapter;
+    private ImageSelectAdapter imageSelectAdapter;
+
     int ref;
     Bitmap tempBmp;
     @Override
@@ -215,4 +218,14 @@ public class MainActivity extends AppCompatActivity {
 
         mAdapter.notifyDataSetChanged();
     }
+
+
+    public void moviePicked(View view){
+        imageSelectAdapter.setImagePosition(Integer.parseInt(view.getTag().toString()));
+        int filterNo = imageSelectAdapter.getImagePosition();
+        Toast.makeText(this,filterNo,Toast.LENGTH_SHORT).show();
+
+        Log.d("ROW","Image No Clicked: " + filterNo);
+    }
+
 }
