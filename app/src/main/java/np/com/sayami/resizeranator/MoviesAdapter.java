@@ -2,15 +2,21 @@ package np.com.sayami.resizeranator;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -34,17 +40,20 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView imageView;
         public TextView title, year, genre;
+        public TextView filterName;
         public RatingBar ratingBar;
+        public LinearLayout linearLayout;
 
         public MyViewHolder(View view, MyClicks listener) {
             super(view);
             mClicks = listener;
             context = view.getContext();
-            imageView = (ImageView) view.findViewById(R.id.image);
-            title = (TextView) view.findViewById(R.id.title);
-            genre = (TextView) view.findViewById(R.id.genre);
-            year = (TextView) view.findViewById(R.id.year);
-            ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
+            imageView = (ImageView) view.findViewById(R.id.filterImage);
+//            filterName = (TextView) view.findViewById(R.id.filterName);
+            linearLayout = (LinearLayout) view.findViewById(R.id.linearLayout);
+//            genre = (TextView) view.findViewById(R.id.genre);
+//            year = (TextView) view.findViewById(R.id.year);
+//            ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
             imageView.setOnClickListener(this);
             view.setOnClickListener(this);
         }
@@ -82,7 +91,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_layout, parent, false);
+                .inflate(R.layout.layout_filter, parent, false);
 
         MoviesAdapter.MyViewHolder myViewHolder = new MyViewHolder(itemView, new MoviesAdapter.MyClicks() {
 
@@ -118,13 +127,23 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
      * **/
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
         Movie movie = moviesList.get(position);
         holder.imageView.setImageResource(movie.getImgSrc());
-        holder.title.setText(movie.getTitle());
-        holder.genre.setText(movie.getGenre());
-        holder.year.setText(movie.getYear());
-        holder.ratingBar.setRating(movie.getRating());
+//        holder.filterName.setText(movie.getTitle());
+//        holder.genre.setText(movie.getGenre());
+//        holder.year.setText(movie.getYear());
+//        holder.ratingBar.setRating(movie.getRating());
+
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),movie.getImgSrc());
+
+        Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                int bgColor = palette.getLightMutedColor(context.getResources().getColor(android.R.color.black));
+                holder.linearLayout.setBackgroundColor(bgColor);
+            }
+        });
     }
 
 

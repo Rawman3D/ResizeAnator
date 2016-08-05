@@ -9,15 +9,18 @@ import android.graphics.Interpolator;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageView;
     EditText xPos, yPos, winSize;
     TextView txtV;
+    private RelativeLayout mRelativeLayout;
     private List<Movie> movieList = new ArrayList<>();
     private RecyclerView recyclerView;
     private MoviesAdapter mAdapter;
@@ -50,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
         yPos = (EditText) findViewById(R.id.getYpos);
         winSize = (EditText) findViewById(R.id.getWinSize);
         txtV = (TextView) findViewById(R.id.textView);
+        mRelativeLayout = (RelativeLayout) findViewById(R.id.mainRelativeLayout);
+
+        backgroundColorChange(receivedBitmap);
+
 
         mAdapter = new MoviesAdapter(movieList);
         recyclerView = (RecyclerView) findViewById(R.id.recycle_list);
@@ -181,16 +189,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void prepareMovieData() {
-        Movie movie = new Movie(R.drawable.kabaddi,"Loot", "Action, Comedy", "2013", (float) 4.2);
+        Movie movie = new Movie(R.drawable.glass1,"Loot", "Action, Comedy", "2013", (float) 4.2);
         movieList.add(movie);
 
-        movie = new Movie(R.drawable.kabaddi,"Kabadi", "Love, Comedy", "2014", (float) 4.5);
+        movie = new Movie(R.drawable.glass1,"Kabadi", "Love, Comedy", "2014", (float) 4.5);
         movieList.add(movie);
 
-        movie = new Movie(R.drawable.warcraft,"Bhirkhe lai chinchas", "Unknown", "2015", (float) 2);
+        movie = new Movie(R.drawable.glass1,"Bhirkhe lai chinchas", "Unknown", "2015", (float) 2);
         movieList.add(movie);
 
-        movie = new Movie(R.drawable.warcraft,"Kabadi Kabadi", "Love, Comedy", "2016",(float) 3.8);
+        movie = new Movie(R.drawable.glass1,"Kabadi Kabadi", "Love, Comedy", "2016",(float) 3.8);
         movieList.add(movie);
 
         movie = new Movie(R.drawable.kabaddi, "6 ekan 6", "Comedy", "2015", (float) 4);
@@ -232,6 +240,18 @@ public class MainActivity extends AppCompatActivity {
         Matrix returnImage = new Matrix();
         returnImage.postRotate(270);
         return Bitmap.createBitmap(bitmap,0,0, bitmap.getWidth(),bitmap.getHeight(), returnImage,true);
+    }
+
+    private void backgroundColorChange(Bitmap bitmap){
+        Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                int bgColor = palette.getLightMutedColor(getResources().getColor(android.R.color.black));
+//                int barColor = palette.getVibrantColor(getResources().getColor(android.R.color.black));
+                mRelativeLayout.setBackgroundColor(bgColor);
+//                getActionBar().setBackgroundDrawable(new ColorDrawable(barColor));
+            }
+        });
     }
 
 }
