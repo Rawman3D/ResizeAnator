@@ -1,5 +1,6 @@
 package np.com.sayami.resizeranator;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MoviesAdapter mAdapter;
     private ImageSelectAdapter imageSelectAdapter;
+    public static final String IMAGE_PASS = "bitmapImage";
+    private Bitmap receivedBitmap;
 
     int ref;
     Bitmap tempBmp;
@@ -38,9 +41,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ref = (R.drawable.budo);
+
+        receivedBitmap = setImage(CameraActivity.getBitmapImage());
+
         imageView = (ImageView) findViewById(R.id.imageView);
-        imageView.setImageResource(R.drawable.budo);
+        imageView.setImageBitmap(receivedBitmap);
         xPos = (EditText) findViewById(R.id.getXpos);
         yPos = (EditText) findViewById(R.id.getYpos);
         winSize = (EditText) findViewById(R.id.getWinSize);
@@ -52,7 +57,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
 
+
+
+
         prepareMovieData();
+
 
     }
 
@@ -61,14 +70,8 @@ public class MainActivity extends AppCompatActivity {
         x=Integer.parseInt(xPos.getText().toString());
         y=Integer.parseInt(yPos.getText().toString());
         size=Integer.parseInt(winSize.getText().toString());
-
-        Bitmap getBmp = BitmapFactory.decodeResource(getResources(),R.drawable.budo);
-
-        Bitmap croppedBitmap=Bitmap.createBitmap(getBmp, x,y,size, size);
-
-
+        Bitmap croppedBitmap=Bitmap.createBitmap(receivedBitmap, x,y,size, size);
         imageView.setImageBitmap(croppedBitmap);
-
         Bitmap resizedBitmap19x19=getResizedBitmap(croppedBitmap,19,19);
 
         Log.i("TAG",Integer.toString(resizedBitmap19x19.getWidth()));
@@ -92,19 +95,16 @@ public class MainActivity extends AppCompatActivity {
         y=Integer.parseInt(yPos.getText().toString());
         size=Integer.parseInt(winSize.getText().toString());
 
-
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.drawable.budo);
         Paint paint = new Paint();
         paint.setColor(Color.BLUE);
         paint.setStrokeWidth(5);
         paint.setStyle(Paint.Style.STROKE);
         //Add a png image
-        //histo budo 400,500,250
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.glass1);
 
         Bitmap drawableBitmap = getResizedBitmap(bitmap,size*2,size*2);
 
-        Bitmap mutableBitmap = bmp.copy(Bitmap.Config.ARGB_8888, true);
+        Bitmap mutableBitmap =receivedBitmap.copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(mutableBitmap);
         canvas.drawBitmap(drawableBitmap,x,y,null);
 
@@ -119,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
         y=Integer.parseInt(yPos.getText().toString());
         size=Integer.parseInt(winSize.getText().toString());
 
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.drawable.budo);
         Paint paint = new Paint();
         paint.setColor(Color.BLUE);
         paint.setStrokeWidth(5);
@@ -128,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        Bitmap mutableBitmap = bmp.copy(Bitmap.Config.ARGB_8888, true);
+        Bitmap mutableBitmap = receivedBitmap.copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(mutableBitmap);
         canvas.drawRect(x, y, x+size, y+size, paint);
 
@@ -226,6 +225,13 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this,filterNo,Toast.LENGTH_SHORT).show();
 
         Log.d("ROW","Image No Clicked: " + filterNo);
+    }
+
+
+    Bitmap setImage(Bitmap bitmap){
+        Matrix returnImage = new Matrix();
+        returnImage.postRotate(270);
+        return Bitmap.createBitmap(bitmap,0,0, bitmap.getWidth(),bitmap.getHeight(), returnImage,true);
     }
 
 }
