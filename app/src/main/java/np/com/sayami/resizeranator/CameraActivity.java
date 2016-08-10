@@ -35,12 +35,9 @@ public class CameraActivity extends AppCompatActivity {
     private Camera mCamera;
     private CameraPreview mPreview;
     private static Bitmap mBitmap;
-    public static final String TAG = "Clicks";
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
-    private Bitmap transferBitmap;
-    private byte[] transferData;
-    private static int mCameraNumber = 0;
+    private static int mCameraNumber = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,6 +55,7 @@ public class CameraActivity extends AppCompatActivity {
         mPreview.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                mCamera.takePicture(null, null, mPicture);
                 Toast.makeText(getApplicationContext(),"On touch",Toast.LENGTH_SHORT).show();
                 mCamera.cancelAutoFocus();
                 Camera.Parameters parameters = mCamera.getParameters();

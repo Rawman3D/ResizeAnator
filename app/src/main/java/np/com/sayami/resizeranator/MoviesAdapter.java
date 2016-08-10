@@ -107,6 +107,13 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
             public void clickOnRow(View info, int position){
                 itemView.setTag(position);
                 Toast.makeText(context,"Whole row clicked",Toast.LENGTH_SHORT).show();
+                // make the position ko picture to save in image holder class
+                int src=moviesList.get(position).getImgSrc();
+                ImageHolder imageHolder = new ImageHolder();
+                imageHolder.setImageSource(src);
+
+                MainActivity mainActivity= new MainActivity();
+                mainActivity.drawFilter(info, src);
                 Log.d("RSA","The Second click also works");
                 try{
                     ((MainActivity) info.getContext()).moviePicked(itemView);
@@ -135,15 +142,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
 //        holder.year.setText(movie.getYear());
 //        holder.ratingBar.setRating(movie.getRating());
 
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),movie.getImgSrc());
+    /*    Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),movie.getImgSrc());
 
         Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
             @Override
             public void onGenerated(Palette palette) {
-                int bgColor = palette.getLightMutedColor(context.getResources().getColor(android.R.color.black));
+                int bgColor = palette.getLightMutedColor(context.getResources().getColor(android.R.color.white));
                 holder.linearLayout.setBackgroundColor(bgColor);
             }
-        });
+        });*/
     }
 
 

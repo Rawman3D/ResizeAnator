@@ -5,12 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Interpolator;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
@@ -23,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,42 +27,38 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageView;
     EditText xPos, yPos, winSize;
     TextView txtV;
-    private RelativeLayout mRelativeLayout;
     private List<Movie> movieList = new ArrayList<>();
     private RecyclerView recyclerView;
     private MoviesAdapter mAdapter;
     private ImageSelectAdapter imageSelectAdapter;
-    public static final String IMAGE_PASS = "bitmapImage";
+    private RelativeLayout mRelativeLayout;
     private Bitmap receivedBitmap;
 
     int ref;
     Bitmap tempBmp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_main);
+        setContentView(R.layout.activity_main);
 
         receivedBitmap = setImage(CameraActivity.getBitmapImage());
 
         imageView = (ImageView) findViewById(R.id.imageView);
         imageView.setImageBitmap(receivedBitmap);
-//        xPos = (EditText) findViewById(R.id.getXpos);
-//        yPos = (EditText) findViewById(R.id.getYpos);
-//        winSize = (EditText) findViewById(R.id.getWinSize);
-//        txtV = (TextView) findViewById(R.id.textView);
+        xPos = (EditText) findViewById(R.id.getXpos);
+        yPos = (EditText) findViewById(R.id.getYpos);
+        winSize = (EditText) findViewById(R.id.getWinSize);
+        txtV = (TextView) findViewById(R.id.textView);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.mainRelativeLayout);
 
         backgroundColorChange(receivedBitmap);
-
 
         mAdapter = new MoviesAdapter(movieList);
         recyclerView = (RecyclerView) findViewById(R.id.recycle_list);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
-
-
-
 
         prepareMovieData();
 
@@ -88,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         imageView.setImageBitmap(resizedBitmap19x19);
 
     }
+
     public void testSkin(View view){
         if(hasEnoughSkin()==true)
             txtV.setText("PASS!!");
@@ -96,6 +89,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent( MainActivity.this,CameraActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     public void drawFilter(View view){
         int x,y,size;
@@ -112,7 +112,38 @@ public class MainActivity extends AppCompatActivity {
 
         Bitmap drawableBitmap = getResizedBitmap(bitmap,size*2,size*2);
 
-        Bitmap mutableBitmap =receivedBitmap.copy(Bitmap.Config.ARGB_8888, true);
+        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+        Canvas canvas = new Canvas(mutableBitmap);
+        canvas.drawBitmap(drawableBitmap,x,y,null);
+
+        imageView.setImageBitmap(mutableBitmap);
+
+        tempBmp = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+    }
+
+
+    public void drawFilter(View view,int src){
+        int x,y,size;
+        x=Integer.parseInt(xPos.getText().toString());
+        y=Integer.parseInt(yPos.getText().toString());
+        size=Integer.parseInt(winSize.getText().toString());
+
+
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.drawable.budo);
+        Paint paint = new Paint();
+        paint.setColor(Color.BLUE);
+        paint.setStrokeWidth(5);
+        paint.setStyle(Paint.Style.STROKE);
+        //Add a png image
+        //histo budo 400,500,250
+
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),src);
+
+
+        Bitmap drawableBitmap = getResizedBitmap(bitmap,size*2,size*2);
+
+        Bitmap mutableBitmap = bmp.copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(mutableBitmap);
         canvas.drawBitmap(drawableBitmap,x,y,null);
 
@@ -127,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
         y=Integer.parseInt(yPos.getText().toString());
         size=Integer.parseInt(winSize.getText().toString());
 
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.drawable.budo);
         Paint paint = new Paint();
         paint.setColor(Color.BLUE);
         paint.setStrokeWidth(5);
@@ -189,37 +221,61 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void prepareMovieData() {
-        Movie movie = new Movie(R.drawable.glass1,"Loot", "Action, Comedy", "2013", (float) 4.2);
+        Movie movie = new Movie(R.drawable.eyeglasses,"Round Glass, Black", "Action, Comedy", "2013", (float) 4.2);
         movieList.add(movie);
 
-        movie = new Movie(R.drawable.glass1,"Kabadi", "Love, Comedy", "2014", (float) 4.5);
+        movie = new Movie(R.drawable.eyeglasses_001,"Round Glass, Red", "Love, Comedy", "2014", (float) 4.5);
         movieList.add(movie);
 
-        movie = new Movie(R.drawable.glass1,"Bhirkhe lai chinchas", "Unknown", "2015", (float) 2);
+        movie = new Movie(R.drawable.eyeglasses_002,"Round Glass, Yellow", "Unknown", "2015", (float) 2);
         movieList.add(movie);
 
-        movie = new Movie(R.drawable.glass1,"Kabadi Kabadi", "Love, Comedy", "2016",(float) 3.8);
+        movie = new Movie(R.drawable.eyeglasses_003,"Round Glass, Purple", "Love, Comedy", "2016",(float) 3.8);
         movieList.add(movie);
 
-        movie = new Movie(R.drawable.kabaddi, "6 ekan 6", "Comedy", "2015", (float) 4);
+        movie = new Movie(R.drawable.eyeglasses_004, "Round Glass, Green", "Comedy", "2015", (float) 4);
         movieList.add(movie);
 
-        movie = new Movie(R.drawable.warcraft, "Pashupati Prasad", "Serious, Reality", "2016", (float) 4.6);
+        movie = new Movie(R.drawable.eyeglasses_005, "John Lenon", "Serious, Reality", "2016", (float) 4.6);
         movieList.add(movie);
 
-        movie = new Movie(R.drawable.warcraft, "WarCraft", "Animation, Fantasy", "2016", (float) 4.3);
+        movie = new Movie(R.drawable.glasses, "Hipster Black", "Animation, Fantasy", "2016", (float) 4.3);
         movieList.add(movie);
 
-        movie = new Movie(R.drawable.kabaddi, "Conjuring 2", "Horror", "2016", (float) 4);
+        movie = new Movie(R.drawable.glasses_001, "Hipster Red", "Horror", "2016", (float) 4);
         movieList.add(movie);
 
-        movie = new Movie(R.drawable.warcraft, "Minions", "Animation", "2014", (float) 4.4);
+        movie = new Movie(R.drawable.glasses_002, "Uncle Style", "Animation", "2014", (float) 4.4);
         movieList.add(movie);
 
-        movie = new Movie(R.drawable.kabaddi, "Iron Man", "Action & Adventure", "2008", (float) 3.8);
+        movie = new Movie(R.drawable.glasses_003, "Round Edge Green", "Action & Adventure", "2008", (float) 3.8);
         movieList.add(movie);
 
-        movie = new Movie(R.drawable.warcraft, "Back to the Future", "Science Fiction", "1985", (float) 4.3);
+        movie = new Movie(R.drawable.glasses_004, "Round Edge Blue", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.glasses_005, "Round Edge Yellow", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.glasses_006, "Round Edge Red", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.glasses_007, "Round Edge Black", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.glasses_008, "Round Edge Pink", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.glasses_009, "Pink Uncle", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.glasses_010, "Green Uncle", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.glasses_011, "Blue Uncle", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.sunglasses, "Sunglass", "Science Fiction", "1985", (float) 4.3);
         movieList.add(movie);
 
 
@@ -239,6 +295,7 @@ public class MainActivity extends AppCompatActivity {
     Bitmap setImage(Bitmap bitmap){
         Matrix returnImage = new Matrix();
         returnImage.postRotate(270);
+        returnImage.preScale(1, -1);
         return Bitmap.createBitmap(bitmap,0,0, bitmap.getWidth(),bitmap.getHeight(), returnImage,true);
     }
 
@@ -247,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onGenerated(Palette palette) {
                 int bgColor = palette.getLightMutedColor(getResources().getColor(android.R.color.black));
-                int barColor = palette.getVibrantColor(getResources().getColor(android.R.color.black));
+//                int barColor = palette.getVibrantColor(getResources().getColor(android.R.color.black));
                 mRelativeLayout.setBackgroundColor(bgColor);
 //                getActionBar().setBackgroundDrawable(new ColorDrawable(barColor));
             }

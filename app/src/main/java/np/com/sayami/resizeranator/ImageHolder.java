@@ -7,25 +7,18 @@ import android.media.Image;
  * Created by sayami on 7/11/2016.
  */
 public class ImageHolder {
-    Bitmap Image;
-    int winSize;
-    int xPos;
-    int yPos;
+    int imageSource;
 
-    ImageHolder(){
 
+    public int getImageSource() {
+        return imageSource;
     }
-    ImageHolder(Bitmap bmp, int x, int y, int size){
-        Image=bmp;
-        winSize=size;
-        xPos=x;
-        yPos=y;
 
+    public void setImageSource(int imageSource) {
+        this.imageSource = imageSource;
     }
 
 
-
-
-
+ 
 
 }
