@@ -12,22 +12,22 @@
         android:layout_weight="1"
         android:layout_gravity="center"
 
-        />
+        >
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/imgClick"
+            android:background="@drawable/ic_action_camera_d"
+            android:layout_marginBottom="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal|bottom" />
+    </FrameLayout>
 
 
     <ImageButton
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:id="@+id/imgClick"
-        android:background="@drawable/ic_action_camera_d"
-        android:layout_marginBottom="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        />
-
-    <ImageButton
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:id="@+id/imgFlip"
         android:background="@drawable/ic_cached_white_48dp"
         android:layout_marginTop="20dp"

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ResizeAnator.iml" filepath="$PROJECT_DIR$/ResizeAnator.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/resizeAnator.iml" filepath="$PROJECT_DIR$/resizeAnator.iml" />
     </modules>
   </component>
 </project>
