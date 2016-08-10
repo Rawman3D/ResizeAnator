@@ -44,16 +44,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.layout_main);
 
         receivedBitmap = setImage(CameraActivity.getBitmapImage());
 
         imageView = (ImageView) findViewById(R.id.imageView);
         imageView.setImageBitmap(receivedBitmap);
-        xPos = (EditText) findViewById(R.id.getXpos);
-        yPos = (EditText) findViewById(R.id.getYpos);
-        winSize = (EditText) findViewById(R.id.getWinSize);
-        txtV = (TextView) findViewById(R.id.textView);
+//        xPos = (EditText) findViewById(R.id.getXpos);
+//        yPos = (EditText) findViewById(R.id.getYpos);
+//        winSize = (EditText) findViewById(R.id.getWinSize);
+//        txtV = (TextView) findViewById(R.id.textView);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.mainRelativeLayout);
 
         backgroundColorChange(receivedBitmap);
@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onGenerated(Palette palette) {
                 int bgColor = palette.getLightMutedColor(getResources().getColor(android.R.color.black));
-//                int barColor = palette.getVibrantColor(getResources().getColor(android.R.color.black));
+                int barColor = palette.getVibrantColor(getResources().getColor(android.R.color.black));
                 mRelativeLayout.setBackgroundColor(bgColor);
 //                getActionBar().setBackgroundDrawable(new ColorDrawable(barColor));
             }

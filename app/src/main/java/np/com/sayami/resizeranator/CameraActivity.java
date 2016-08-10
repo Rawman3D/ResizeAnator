@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -37,6 +40,7 @@ public class CameraActivity extends AppCompatActivity {
     public static final int MEDIA_TYPE_VIDEO = 2;
     private Bitmap transferBitmap;
     private byte[] transferData;
+    private static int mCameraNumber = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +55,21 @@ public class CameraActivity extends AppCompatActivity {
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
         preview.addView(mPreview);
 
+        mPreview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Toast.makeText(getApplicationContext(),"On touch",Toast.LENGTH_SHORT).show();
+                mCamera.cancelAutoFocus();
+                Camera.Parameters parameters = mCamera.getParameters();
+                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+                mCamera.setParameters(parameters);
+                return false;
+            }
+        });
+
+
         ImageButton captureButton = (ImageButton) findViewById(R.id.imgClick);
+        ImageButton flipButton = (ImageButton) findViewById(R.id.imgFlip);
         captureButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -75,6 +93,20 @@ public class CameraActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        flipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCameraNumber == 0){
+                    mCameraNumber = 1;
+                } else {
+                    mCameraNumber = 0;
+                }
+
+                Toast.makeText(getApplicationContext(),"Flipped",Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
 
@@ -82,7 +114,7 @@ public class CameraActivity extends AppCompatActivity {
         Camera c = null;
         try{
             //0 for back camera and 1 for front camera
-            c = Camera.open(1);
+            c = Camera.open(mCameraNumber);
         }
         catch (Exception e){
 
@@ -107,9 +139,6 @@ public class CameraActivity extends AppCompatActivity {
             startActivity(intent);
             //TODO crash problem
             finish();
-//            mCamera.stopPreview();
-//            mCamera.release();
-//            mCamera.setPreviewCallback(null);
 
             /*File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
             if (pictureFile == null){
@@ -179,6 +208,5 @@ public class CameraActivity extends AppCompatActivity {
            Log.d("INFO","mBitmap is not empty");
         }
     }
-
 
 }
