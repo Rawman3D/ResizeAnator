@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
         y=Integer.parseInt(yPos.getText().toString());
         size=Integer.parseInt(winSize.getText().toString());
 
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.drawable.budo);
+//        Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.drawable.budo);
         Paint paint = new Paint();
         paint.setColor(Color.BLUE);
         paint.setStrokeWidth(5);
@@ -232,19 +232,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void prepareMovieData() {
-        Movie movie = new Movie(R.drawable.eyeglasses,"Round Glass, Black", "Action, Comedy", "2013", (float) 4.2);
+        Movie movie = new Movie(R.drawable.thug1,"Round Glass, Black", "Action, Comedy", "2013", (float) 4.2);
         movieList.add(movie);
 
-        movie = new Movie(R.drawable.eyeglasses_001,"Round Glass, Red", "Love, Comedy", "2014", (float) 4.5);
+        movie = new Movie(R.drawable.thuglifer,"Round Glass, Red", "Love, Comedy", "2014", (float) 4.5);
         movieList.add(movie);
 
-        movie = new Movie(R.drawable.eyeglasses_002,"Round Glass, Yellow", "Unknown", "2015", (float) 2);
+        movie = new Movie(R.drawable.eyeglasses_001,"Round Glass, Yellow", "Unknown", "2015", (float) 2);
         movieList.add(movie);
 
         movie = new Movie(R.drawable.eyeglasses_003,"Round Glass, Purple", "Love, Comedy", "2016",(float) 3.8);
         movieList.add(movie);
 
-        movie = new Movie(R.drawable.eyeglasses_004, "Round Glass, Green", "Comedy", "2015", (float) 4);
+        movie = new Movie(R.drawable.glass1, "Round Glass, Green", "Comedy", "2015", (float) 4);
         movieList.add(movie);
 
         movie = new Movie(R.drawable.eyeglasses_005, "John Lenon", "Serious, Reality", "2016", (float) 4.6);
@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
         movie = new Movie(R.drawable.glasses_004, "Round Edge Blue", "Science Fiction", "1985", (float) 4.3);
         movieList.add(movie);
 
-        movie = new Movie(R.drawable.glasses_005, "Round Edge Yellow", "Science Fiction", "1985", (float) 4.3);
+        movie = new Movie(R.drawable.eyeglasses, "Round Edge Yellow", "Science Fiction", "1985", (float) 4.3);
         movieList.add(movie);
 
         movie = new Movie(R.drawable.glasses_006, "Round Edge Red", "Science Fiction", "1985", (float) 4.3);

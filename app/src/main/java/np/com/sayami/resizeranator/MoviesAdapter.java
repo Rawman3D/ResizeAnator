@@ -103,7 +103,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
             public void clickOnImage(ImageView imgView,int pos){
                 Movie movie = moviesList.get(pos);
                 itemView.setTag(pos);
-                Toast.makeText(context,"Whole row clicked",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context,"Whole row clicked",Toast.LENGTH_SHORT).show();
                 // make the position ko picture to save in image holder class
                 int src=movie.getImgSrc();
                 ImageHolder imageHolder = new ImageHolder();
@@ -112,20 +112,20 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
 //                MainActivity mainActivity= new MainActivity();
                 mainActivity.drawFilter(imgView, src);
                 //movie.getImgSrc();
-                Toast.makeText(context,"Image Click",Toast.LENGTH_SHORT).show();
-                Log.d("Rating ","The click works");
+//                Toast.makeText(context,"Image Click",Toast.LENGTH_SHORT).show();
+//                Log.d("Rating ","The click works");
 
                 }
 
             public void clickOnRow(View info, int position){
                 itemView.setTag(position);
-                Toast.makeText(context,"Whole row clicked",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context,"Whole row clicked",Toast.LENGTH_SHORT).show();
                 // make the position ko picture to save in image holder class
                 int src=moviesList.get(position).getImgSrc();
                 ImageHolder imageHolder = new ImageHolder();
                 imageHolder.setImageSource(src);
 
-                MainActivity mainActivity= new MainActivity();
+//                MainActivity mainActivity= new MainActivity();
                 mainActivity.drawFilter(info, src);
                 Log.d("RSA","The Second click also works");
                 try{
