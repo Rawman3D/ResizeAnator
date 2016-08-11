@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         paint.setStyle(Paint.Style.STROKE);
         //Add a png image
         Bitmap bmp =  receivedBitmap;
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.sunglasses);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.glasses_002);
 
         Bitmap drawableBitmap = getResizedBitmap(bitmap,size,size);
 
@@ -286,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
         movie = new Movie(R.drawable.glasses_011, "Blue Uncle", "Science Fiction", "1985", (float) 4.3);
         movieList.add(movie);
 
-        movie = new Movie(R.drawable.sunglasses, "Sunglass", "Science Fiction", "1985", (float) 4.3);
+        movie = new Movie(R.drawable.sunglasses_new, "Sunglass", "Science Fiction", "1985", (float) 4.3);
         movieList.add(movie);
 
 
