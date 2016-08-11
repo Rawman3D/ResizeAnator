@@ -91,7 +91,7 @@
         android:id="@+id/drawFilter"
         android:layout_alignBottom="@+id/drawButton"
         android:layout_toEndOf="@+id/getYpos"
-        android:onClick="drawFilter" />
+        android:onClick="drawFilter(View);" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_list"

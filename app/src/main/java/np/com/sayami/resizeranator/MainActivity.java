@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -54,13 +55,21 @@ public class MainActivity extends AppCompatActivity {
 
         backgroundColorChange(receivedBitmap);
 
-        mAdapter = new MoviesAdapter(movieList);
+        mAdapter = new MoviesAdapter(movieList, this);
         recyclerView = (RecyclerView) findViewById(R.id.recycle_list);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
 
         prepareMovieData();
+
+        Button filterDrawButton = (Button) findViewById(R.id.drawFilter);
+        filterDrawButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawFilter(v);
+            }
+        });
 
 
     }
@@ -108,11 +117,12 @@ public class MainActivity extends AppCompatActivity {
         paint.setStrokeWidth(5);
         paint.setStyle(Paint.Style.STROKE);
         //Add a png image
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.glass1);
+        Bitmap bmp =  ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.sunglasses);
 
         Bitmap drawableBitmap = getResizedBitmap(bitmap,size*2,size*2);
 
-        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+        Bitmap mutableBitmap = bmp.copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(mutableBitmap);
         canvas.drawBitmap(drawableBitmap,x,y,null);
 
@@ -129,7 +139,8 @@ public class MainActivity extends AppCompatActivity {
         size=Integer.parseInt(winSize.getText().toString());
 
 
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.drawable.budo);
+        Bitmap bmp = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+
         Paint paint = new Paint();
         paint.setColor(Color.BLUE);
         paint.setStrokeWidth(5);
