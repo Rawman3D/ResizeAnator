@@ -117,10 +117,10 @@ public class MainActivity extends AppCompatActivity {
         paint.setStrokeWidth(5);
         paint.setStyle(Paint.Style.STROKE);
         //Add a png image
-        Bitmap bmp =  ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+        Bitmap bmp =  receivedBitmap;
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.sunglasses);
 
-        Bitmap drawableBitmap = getResizedBitmap(bitmap,size*2,size*2);
+        Bitmap drawableBitmap = getResizedBitmap(bitmap,size,size);
 
         Bitmap mutableBitmap = bmp.copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(mutableBitmap);
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         size=Integer.parseInt(winSize.getText().toString());
 
 
-        Bitmap bmp = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+        Bitmap bmp = receivedBitmap;
 
         Paint paint = new Paint();
         paint.setColor(Color.BLUE);
@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),src);
 
 
-        Bitmap drawableBitmap = getResizedBitmap(bitmap,size*2,size*2);
+        Bitmap drawableBitmap = getResizedBitmap(bitmap,size,size);
 
         Bitmap mutableBitmap = bmp.copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(mutableBitmap);
