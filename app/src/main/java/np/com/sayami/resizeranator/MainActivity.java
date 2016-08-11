@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageSelectAdapter imageSelectAdapter;
     private RelativeLayout mRelativeLayout;
     private Bitmap receivedBitmap;
+    private int mFilterSrc = R.drawable.glasses_001;
 
     int ref;
     Bitmap tempBmp;
@@ -51,6 +53,29 @@ public class MainActivity extends AppCompatActivity {
         winSize = (EditText) findViewById(R.id.getWinSize);
         txtV = (TextView) findViewById(R.id.textView);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.mainRelativeLayout);
+        Button filterButton = (Button) findViewById(R.id.drawFilter);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawFilter(v);
+            }
+        });
+
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mFilterSrc = R.drawable.eyeglasses;
+                return false;
+            }
+        });
+
+        Button rectButton = (Button) findViewById(R.id.drawButton);
+        rectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawRect(v);
+            }
+        });
 
         backgroundColorChange(receivedBitmap);
 
@@ -59,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
+
 
         prepareMovieData();
 
@@ -108,42 +134,11 @@ public class MainActivity extends AppCompatActivity {
         paint.setStrokeWidth(5);
         paint.setStyle(Paint.Style.STROKE);
         //Add a png image
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.glass1);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),mFilterSrc);
 
         Bitmap drawableBitmap = getResizedBitmap(bitmap,size*2,size*2);
 
-        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-        Canvas canvas = new Canvas(mutableBitmap);
-        canvas.drawBitmap(drawableBitmap,x,y,null);
-
-        imageView.setImageBitmap(mutableBitmap);
-
-        tempBmp = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-    }
-
-
-    public void drawFilter(View view,int src){
-        int x,y,size;
-        x=Integer.parseInt(xPos.getText().toString());
-        y=Integer.parseInt(yPos.getText().toString());
-        size=Integer.parseInt(winSize.getText().toString());
-
-
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.drawable.budo);
-        Paint paint = new Paint();
-        paint.setColor(Color.BLUE);
-        paint.setStrokeWidth(5);
-        paint.setStyle(Paint.Style.STROKE);
-        //Add a png image
-        //histo budo 400,500,250
-
-
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),src);
-
-
-        Bitmap drawableBitmap = getResizedBitmap(bitmap,size*2,size*2);
-
-        Bitmap mutableBitmap = bmp.copy(Bitmap.Config.ARGB_8888, true);
+        Bitmap mutableBitmap = receivedBitmap.copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(mutableBitmap);
         canvas.drawBitmap(drawableBitmap,x,y,null);
 
@@ -163,9 +158,6 @@ public class MainActivity extends AppCompatActivity {
         paint.setColor(Color.BLUE);
         paint.setStrokeWidth(5);
         paint.setStyle(Paint.Style.STROKE);
-
-
-
 
         Bitmap mutableBitmap = receivedBitmap.copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(mutableBitmap);
@@ -309,6 +301,10 @@ public class MainActivity extends AppCompatActivity {
 //                getActionBar().setBackgroundDrawable(new ColorDrawable(barColor));
             }
         });
+    }
+
+    public void setFilter(int src){
+        mFilterSrc = src;
     }
 
 }

@@ -81,8 +81,7 @@
         android:text="Draw"
         android:id="@+id/drawButton"
         android:layout_alignBottom="@+id/resizeButton"
-        android:layout_toEndOf="@+id/getXpos"
-        android:onClick="drawRect" />
+        android:layout_toEndOf="@+id/getXpos" />
 
     <Button
         android:layout_width="wrap_content"
@@ -90,8 +89,7 @@
         android:text="Filter"
         android:id="@+id/drawFilter"
         android:layout_alignBottom="@+id/drawButton"
-        android:layout_toEndOf="@+id/getYpos"
-        android:onClick="drawFilter" />
+        android:layout_toEndOf="@+id/getYpos" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_list"

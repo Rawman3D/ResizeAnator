@@ -54,17 +54,17 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
 //            genre = (TextView) view.findViewById(R.id.genre);
 //            year = (TextView) view.findViewById(R.id.year);
 //            ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
-            imageView.setOnClickListener(this);
+//            imageView.setOnClickListener(this);
             view.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v){
-            if(v instanceof ImageView){
+           /* if(v instanceof ImageView){
                 mClicks.clickOnImage((ImageView) v, getLayoutPosition());
-            } else {
+            } else {*/
                 mClicks.clickOnRow(v,getLayoutPosition());
-            }
+//            }
         }
 
     }
@@ -74,7 +74,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
      * **/
 
     public static interface MyClicks{
-        public void clickOnImage(ImageView imgView, int pos);
+//        public void clickOnImage(ImageView imgView, int pos);
         public void clickOnRow(View info, int position);
     }
 
@@ -95,32 +95,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
 
         MoviesAdapter.MyViewHolder myViewHolder = new MyViewHolder(itemView, new MoviesAdapter.MyClicks() {
 
-            //Clicks for interaction.
-            public void clickOnImage(ImageView imgView,int pos){
-                Movie movie = moviesList.get(pos);
-                //movie.getImgSrc();
-                Toast.makeText(context,"Image Click",Toast.LENGTH_SHORT).show();
-                Log.d("Rating ","The click works");
-
-                }
 
             public void clickOnRow(View info, int position){
-                itemView.setTag(position);
-                Toast.makeText(context,"Whole row clicked",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Filter Selected",Toast.LENGTH_SHORT).show();
                 // make the position ko picture to save in image holder class
                 int src=moviesList.get(position).getImgSrc();
-                ImageHolder imageHolder = new ImageHolder();
-                imageHolder.setImageSource(src);
 
-                MainActivity mainActivity= new MainActivity();
-                mainActivity.drawFilter(info, src);
-                Log.d("RSA","The Second click also works");
-                try{
-                    ((MainActivity) info.getContext()).moviePicked(itemView);
-                    Log.d("RSA","Working");
-                } catch (Exception e){
-                    Log.d("RSA","Not Working");
-                }
+//                ImageHolder imageHolder = new ImageHolder();
+//                imageHolder.setImageSource(src);
             }
         });
 
