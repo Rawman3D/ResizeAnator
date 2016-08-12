@@ -3,25 +3,18 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#7c7575"
+    android:background="@color/colorPrimary"
     >
     <FrameLayout
         android:id="@+id/camera_preview"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="500dp"
         android:layout_weight="1"
         android:layout_gravity="center"
 
-        >
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
-        <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/imgClick"
-            android:background="@drawable/ic_action_camera_d"
-            android:layout_marginBottom="30dp"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center_horizontal|bottom" />
     </FrameLayout>
 
 
@@ -30,9 +23,17 @@
         android:layout_height="40dp"
         android:id="@+id/imgFlip"
         android:background="@drawable/ic_cached_white_48dp"
-        android:layout_marginTop="20dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
-        />
+        android:layout_alignTop="@+id/imgClick"
+        android:layout_alignParentEnd="true" />
+
+    <ImageButton
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgClick"
+        android:background="@drawable/ic_action_camera_d"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_below="@+id/camera_preview"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_camera_enhance_black_48dp" />
 </RelativeLayout>

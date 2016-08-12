@@ -4,10 +4,6 @@
     android:id="@+id/mainRelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="np.com.sayami.resizeranator.MainActivity">
 
 
@@ -23,31 +19,22 @@
         android:layout_height="wrap_content"
         android:text="Resize"
         android:id="@+id/resizeButton"
+        android:onClick="doResize"
         android:layout_below="@+id/getXpos"
-        android:layout_alignStart="@+id/getXpos"
-        android:onClick="doResize" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="skin test"
-        android:id="@+id/skinButton"
-        android:layout_below="@+id/resizeButton"
-        android:layout_alignEnd="@+id/resizeButton"
-        android:onClick="testSkin" />
+        android:layout_alignEnd="@+id/getXpos" />
 
     <EditText
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
         android:id="@+id/getXpos"
+        android:hint="X co-ordinate"
         android:layout_below="@+id/imageView"
-        android:layout_alignStart="@+id/imageView"
-        android:hint="X co-ordinate" />
+        android:layout_alignParentStart="true" />
 
     <EditText
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
@@ -57,48 +44,39 @@
         android:hint="Y coordinate" />
 
     <EditText
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
         android:id="@+id/getWinSize"
+        android:hint="Window size"
         android:layout_below="@+id/imageView"
-        android:layout_alignEnd="@+id/imageView"
-        android:hint="Window size" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Pass/fail"
-        android:id="@+id/textView"
-        android:layout_below="@+id/resizeButton"
-        android:layout_alignEnd="@+id/getWinSize" />
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Draw"
         android:id="@+id/drawButton"
-        android:layout_alignBottom="@+id/resizeButton"
-        android:layout_toEndOf="@+id/getXpos"
-        android:onClick="drawRect" />
+        android:onClick="drawRect"
+        android:layout_below="@+id/getYpos"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Filter"
         android:id="@+id/drawFilter"
-        android:layout_alignBottom="@+id/drawButton"
-        android:layout_toEndOf="@+id/getYpos"
-        android:onClick="drawFilter(View);" />
+        android:onClick="drawFilter(View);"
+        android:layout_alignTop="@+id/drawButton"
+        android:layout_alignStart="@+id/getWinSize" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_below="@+id/skinButton"
-        ></android.support.v7.widget.RecyclerView>
+        android:layout_height="80dp"
+        android:layout_below="@+id/resizeButton"
+        android:layout_alignStart="@+id/getXpos"
+        android:layout_marginTop="36dp"></android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

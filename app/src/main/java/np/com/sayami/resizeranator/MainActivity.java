@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         xPos = (EditText) findViewById(R.id.getXpos);
         yPos = (EditText) findViewById(R.id.getYpos);
         winSize = (EditText) findViewById(R.id.getWinSize);
-        txtV = (TextView) findViewById(R.id.textView);
+//        txtV = (TextView) findViewById(R.id.textView);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.mainRelativeLayout);
 
         backgroundColorChange(receivedBitmap);
@@ -108,15 +108,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void drawFilter(View view){
         int x,y,size;
-        x=Integer.parseInt(xPos.getText().toString());
-        y=Integer.parseInt(yPos.getText().toString());
-        size=Integer.parseInt(winSize.getText().toString());
+        try {
+
+
+            x = Integer.parseInt(xPos.getText().toString());
+            y = Integer.parseInt(yPos.getText().toString());
+            size = Integer.parseInt(winSize.getText().toString());
+        }
+        catch (Exception E){
+            x=95;
+            y=160;
+            size = 250;
+        }
+
 
         Paint paint = new Paint();
         paint.setColor(Color.BLUE);
         paint.setStrokeWidth(5);
         paint.setStyle(Paint.Style.STROKE);
-        //Add a png image
         Bitmap bmp =  receivedBitmap;
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.glasses_002);
 
@@ -134,10 +143,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void drawFilter(View view,int src){
         int x,y,size;
-        x=Integer.parseInt(xPos.getText().toString());
-        y=Integer.parseInt(yPos.getText().toString());
-        size=Integer.parseInt(winSize.getText().toString());
+        try {
 
+
+            x = Integer.parseInt(xPos.getText().toString());
+            y = Integer.parseInt(yPos.getText().toString());
+            size = Integer.parseInt(winSize.getText().toString());
+        }
+        catch (Exception E){
+            x=95;
+            y=160;
+            size = 250;
+        }
 
         Bitmap bmp = receivedBitmap;
 
@@ -145,9 +162,6 @@ public class MainActivity extends AppCompatActivity {
         paint.setColor(Color.BLUE);
         paint.setStrokeWidth(5);
         paint.setStyle(Paint.Style.STROKE);
-        //Add a png image
-        //histo budo 400,500,250
-
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),src);
 
@@ -175,18 +189,13 @@ public class MainActivity extends AppCompatActivity {
         paint.setStrokeWidth(5);
         paint.setStyle(Paint.Style.STROKE);
 
-
-
-
         Bitmap mutableBitmap = receivedBitmap.copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(mutableBitmap);
         canvas.drawRect(x, y, x+size, y+size, paint);
 
-
         imageView.setImageBitmap(mutableBitmap);
 
         tempBmp = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-
     }
 
     public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
@@ -244,9 +253,6 @@ public class MainActivity extends AppCompatActivity {
         movie = new Movie(R.drawable.eyeglasses_003,"Round Glass, Purple", "Love, Comedy", "2016",(float) 3.8);
         movieList.add(movie);
 
-        movie = new Movie(R.drawable.glass1, "Round Glass, Green", "Comedy", "2015", (float) 4);
-        movieList.add(movie);
-
         movie = new Movie(R.drawable.eyeglasses_005, "John Lenon", "Serious, Reality", "2016", (float) 4.6);
         movieList.add(movie);
 
@@ -288,6 +294,40 @@ public class MainActivity extends AppCompatActivity {
 
         movie = new Movie(R.drawable.sunglasses_new, "Sunglass", "Science Fiction", "1985", (float) 4.3);
         movieList.add(movie);
+
+        movie = new Movie(R.drawable.eyes_6, "Sunglass", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.eyes_7, "Sunglass", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.gogs_1, "Sunglass", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.gogs_2, "Sunglass", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.gogs_3, "Sunglass", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.round_glass, "Sunglass", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.sexy_eye2, "Sunglass", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.eyes_7, "Sunglass", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.eyes_8, "Sunglass", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.histobudo, "Sunglass", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
+        movie = new Movie(R.drawable.eyes_9, "Sunglass", "Science Fiction", "1985", (float) 4.3);
+        movieList.add(movie);
+
 
 
         mAdapter.notifyDataSetChanged();
