@@ -17,6 +17,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import org.w3c.dom.Text;
 
 import java.util.List;
@@ -149,8 +151,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         Movie movie = moviesList.get(position);
-        holder.imageView.setImageResource(movie.getImgSrc());
-
+//        holder.imageView.setImageResource(movie.getImgSrc());
+        Glide.with(context).load(movie.getImgSrc()).into(holder.imageView);
 //        holder.filterName.setText(movie.getTitle());
 //        holder.genre.setText(movie.getGenre());
 //        holder.year.setText(movie.getYear());
