@@ -1,11 +1,6 @@
 package np.com.sayami.resizeranator;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.bumptech.glide.Glide;
 
@@ -27,8 +22,8 @@ import java.util.List;
  * Created by xitiz on 6/20/16.
  * This is a custom adapter made for presenting our elements.
  * RecyclerView provides two methods that we usually override:
- *      - onCreateViewHolder()
- *      - onBindViewHolder()
+ * - onCreateViewHolder()
+ * - onBindViewHolder()
  */
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder> {
@@ -40,7 +35,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
 
     /**
      * A viewHolder for the
-     * **/
+     **/
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView imageView;
         public TextView title, year, genre;
@@ -63,11 +58,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
         }
 
         @Override
-        public void onClick(View v){
-            if(v instanceof ImageView){
+        public void onClick(View v) {
+            if (v instanceof ImageView) {
                 mClicks.clickOnImage((ImageView) v, getLayoutPosition());
             } else {
-                mClicks.clickOnRow(v,getLayoutPosition());
+                mClicks.clickOnRow(v, getLayoutPosition());
             }
         }
 
@@ -75,15 +70,17 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
 
     /**
      * Interface for checking the clicks and what to do when different clicks occur.
-     * **/
+     **/
 
-    public static interface MyClicks{
+    public static interface MyClicks {
         public void clickOnImage(ImageView imgView, int pos);
+
         public void clickOnRow(View info, int position);
     }
 
 
     MainActivity mainActivity;
+
     public MoviesAdapter(List<Movie> moviesList, MainActivity activity) {
         this.moviesList = moviesList;
 //        this.context = context;
@@ -93,7 +90,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
     /**
      * Work of onCreateViewHolder
      * To inflate the view from movie_list_row layout.
-     * **/
+     **/
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View itemView = LayoutInflater.from(parent.getContext())
@@ -102,39 +99,39 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
         MoviesAdapter.MyViewHolder myViewHolder = new MyViewHolder(itemView, new MoviesAdapter.MyClicks() {
 
             //Clicks for interaction.
-            public void clickOnImage(ImageView imgView,int pos){
+            public void clickOnImage(ImageView imgView, int pos) {
                 Movie movie = moviesList.get(pos);
                 itemView.setTag(pos);
 //                Toast.makeText(context,"Whole row clicked",Toast.LENGTH_SHORT).show();
                 // make the position ko picture to save in image holder class
-                int src=movie.getImgSrc();
+                int src = movie.getImgSrc();
                 ImageHolder imageHolder = new ImageHolder();
                 imageHolder.setImageSource(src);
 
 //                MainActivity mainActivity= new MainActivity();
-                mainActivity.drawFilter(imgView, src);
+                mainActivity.drawFilter(src);
                 //movie.getImgSrc();
 //                Toast.makeText(context,"Image Click",Toast.LENGTH_SHORT).show();
 //                Log.d("Rating ","The click works");
 
-                }
+            }
 
-            public void clickOnRow(View info, int position){
+            public void clickOnRow(View info, int position) {
                 itemView.setTag(position);
 //                Toast.makeText(context,"Whole row clicked",Toast.LENGTH_SHORT).show();
                 // make the position ko picture to save in image holder class
-                int src=moviesList.get(position).getImgSrc();
+                int src = moviesList.get(position).getImgSrc();
                 ImageHolder imageHolder = new ImageHolder();
                 imageHolder.setImageSource(src);
 
 //                MainActivity mainActivity= new MainActivity();
-                mainActivity.drawFilter(info, src);
-                Log.d("RSA","The Second click also works");
-                try{
+                mainActivity.drawFilter(src);
+                Log.d("RSA", "The Second click also works");
+                try {
                     ((MainActivity) info.getContext()).moviePicked(itemView);
-                    Log.d("RSA","Working");
-                } catch (Exception e){
-                    Log.d("RSA","Not Working");
+                    Log.d("RSA", "Working");
+                } catch (Exception e) {
+                    Log.d("RSA", "Not Working");
                 }
             }
         });
@@ -146,7 +143,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
      * Work of onBindViewHolder
      * Set the appropriate data to each value in the row.
      * Match the different elements with the corresponding value.
-     * **/
+     **/
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {

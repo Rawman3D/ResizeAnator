@@ -19,43 +19,40 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     private Camera.FaceDetectionListener faceDetectionListener = new Camera.FaceDetectionListener() {
         @Override
         public void onFaceDetection(Camera.Face[] faces, Camera camera) {
-            Log.d(TAG,"Number of faces: " + faces.length);
+            Log.d(TAG, "Number of faces: " + faces.length);
             // TODO insert overlay here
         }
     };
 
-    public CameraPreview(Context context, Camera camera){
+    public CameraPreview(Context context, Camera camera) {
         super(context);
         mCamera = camera;
         mCamera.setDisplayOrientation(90);
 
-        mHolder =  getHolder();
+        mHolder = getHolder();
         mHolder.addCallback(this);
         mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     }
 
 
-
-
-
     @Override
-    public void surfaceCreated(SurfaceHolder holder){
+    public void surfaceCreated(SurfaceHolder holder) {
         Camera.Parameters params = mCamera.getParameters();
         params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
         mCamera.setParameters(params);
         mCamera.setFaceDetectionListener(faceDetectionListener);
         mCamera.startFaceDetection();
-        try{
+        try {
 
             mCamera.setPreviewDisplay(holder);
             mCamera.startPreview();
-        } catch (IOException e){
-            Log.d(TAG,"Error setting camera Preview" + e.getMessage());
+        } catch (IOException e) {
+            Log.d(TAG, "Error setting camera Preview" + e.getMessage());
         }
     }
 
     @Override
-    public void surfaceDestroyed(SurfaceHolder holder){
+    public void surfaceDestroyed(SurfaceHolder holder) {
 //        mCamera.stopFaceDetection();
         mCamera.stopPreview();
         mCamera.release();
@@ -64,19 +61,19 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int w, int h){
+    public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
         refreshCamera();
     }
 
-    public void refreshCamera(){
-        if(mHolder.getSurface() == null){
+    public void refreshCamera() {
+        if (mHolder.getSurface() == null) {
             return;
         }
 
-        try{
+        try {
             //mCamera.stopFaceDetection();
             mCamera.stopPreview();
-        } catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -84,7 +81,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             mCamera.setPreviewDisplay(mHolder);
             mCamera.startPreview();
 //            mCamera.startFaceDetection();
-        } catch (Exception e){
+        } catch (Exception e) {
             Log.d(TAG, "Error starting camera preview: " + e.getMessage());
         }
     }

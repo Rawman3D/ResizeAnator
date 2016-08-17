@@ -56,7 +56,7 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 mCamera.takePicture(null, null, mPicture);
-                Toast.makeText(getApplicationContext(),"On touch",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "On touch", Toast.LENGTH_SHORT).show();
                 mCamera.cancelAutoFocus();
                 Camera.Parameters parameters = mCamera.getParameters();
                 parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
@@ -84,8 +84,6 @@ public class CameraActivity extends AppCompatActivity {
                         mCamera.release();*/
 
 
-
-
 //                        finish();
 
                     }
@@ -95,31 +93,29 @@ public class CameraActivity extends AppCompatActivity {
         flipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCameraNumber == 0){
+                if (mCameraNumber == 0) {
                     mCameraNumber = 1;
                 } else {
                     mCameraNumber = 0;
                 }
 
-                Toast.makeText(getApplicationContext(),"Flipped",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Flipped", Toast.LENGTH_SHORT).show();
 
             }
         });
     }
 
 
-    public static Camera getCameraInstance(){
+    public static Camera getCameraInstance() {
         Camera c = null;
-        try{
+        try {
             //0 for back camera and 1 for front camera
             c = Camera.open(mCameraNumber);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
         }
         return c;
     }
-
 
 
     private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
@@ -128,13 +124,16 @@ public class CameraActivity extends AppCompatActivity {
         public void onPictureTaken(byte[] data, Camera camera) {
 //            Bitmap bitmap = BitmapFactory.decodeByteArray(data,0,data.length);
             Intent intent = new Intent(CameraActivity.this, MainActivity.class);
+            Intent intent1 = new Intent(CameraActivity.this, chunkActivity.class);
+
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 1;
             Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
             setBitmapImage(bitmap);
 
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+//            startActivity(intent);
+            startActivity(intent1);
             //TODO crash problem
             finish();
 
@@ -158,12 +157,14 @@ public class CameraActivity extends AppCompatActivity {
         }
     };
 
-    private static Uri getOutputMediaFileUri(int type){
+    private static Uri getOutputMediaFileUri(int type) {
         return Uri.fromFile(getOutputMediaFile(type));
     }
 
-    /** Create a File for saving an image or video */
-    private static File getOutputMediaFile(int type){
+    /**
+     * Create a File for saving an image or video
+     */
+    private static File getOutputMediaFile(int type) {
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
 
@@ -173,8 +174,8 @@ public class CameraActivity extends AppCompatActivity {
         // between applications and persist after your app has been uninstalled.
 
         // Create the storage directory if it does not exist
-        if (! mediaStorageDir.exists()){
-            if (! mediaStorageDir.mkdirs()){
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
                 Log.d("MyCameraApp", "failed to create directory");
                 return null;
             }
@@ -183,12 +184,12 @@ public class CameraActivity extends AppCompatActivity {
         // Create a media file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         File mediaFile;
-        if (type == MEDIA_TYPE_IMAGE){
+        if (type == MEDIA_TYPE_IMAGE) {
             mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                    "Picture_"+ timeStamp + ".jpg");
-        } else if(type == MEDIA_TYPE_VIDEO) {
+                    "Picture_" + timeStamp + ".jpg");
+        } else if (type == MEDIA_TYPE_VIDEO) {
             mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                    "VID_"+ timeStamp + ".mp4");
+                    "VID_" + timeStamp + ".mp4");
         } else {
             return null;
         }
@@ -196,14 +197,14 @@ public class CameraActivity extends AppCompatActivity {
         return mediaFile;
     }
 
-    static Bitmap getBitmapImage(){
+    static Bitmap getBitmapImage() {
         return mBitmap;
     }
 
-    public void setBitmapImage(Bitmap bitmap){
+    public void setBitmapImage(Bitmap bitmap) {
         this.mBitmap = bitmap;
-        if(mBitmap != null){
-           Log.d("INFO","mBitmap is not empty");
+        if (mBitmap != null) {
+            Log.d("INFO", "mBitmap is not empty");
         }
     }
 
