@@ -6,13 +6,16 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.media.Image;
+import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import java.io.ByteArrayOutputStream;
+
 
 public class chunkActivity extends AppCompatActivity {
     private Bitmap receivedBitmap;
@@ -51,11 +54,12 @@ public class chunkActivity extends AppCompatActivity {
                 int count=0;
 
                 Bitmap testBmp;
-
-                int newHeight1 = 388;
+                int newHeight1=mheight;
+                int newWidth1 = mwidth;
+                newHeight1 = 256;
                 Log.i("LOG3", "" + newHeight1);
                 setHeight(newHeight1);
-                int newWidth1 = (int) Math.ceil(newHeight1 * mratio );
+                 newWidth1 = (int) Math.ceil(newHeight1 * mratio );
                 setWidth(newWidth1);
 
                 testBmp = getResizedBitmap(receivedBitmap, newWidth1, newHeight1);
@@ -77,17 +81,61 @@ public class chunkActivity extends AppCompatActivity {
                    if(newHeight1<24 || newWidth1<24)
                        break;
                     testBmp = getResizedBitmap(receivedBitmap, newWidth1, newHeight1);
-                    dispImg.setImageBitmap(testBmp);
+//                    dispImg.setImageBitmap(testBmp);
 
-                   Intent resizeService = new Intent(chunkActivity.this, BackgroundService.class);
-                   resizeService.putExtra("Bitmap",testBmp);
-                           Log.i("TAG2", "height:" + testBmp.getHeight());
+                  /* ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                   testBmp.compress(Bitmap.CompressFormat.PNG,100,stream);
+                   byte[] byteArray = stream.toByteArray();
+
+                   Bundle bundle = new Bundle();
+                   bundle.putByteArray("Bitmap",byteArray);
+                   bundle.putString("type","SingleImage");
+
+                   Intent resizeService = new Intent(getApplicationContext(), BackgroundService.class);
+                   resizeService.putExtra("imageUploadBundle",bundle);
+                   startService(resizeService);*/
+
+                   BackgroundTask eutaTask =new BackgroundTask();
+                   eutaTask.execute(testBmp);
+                    Log.i("TAG2", "height:" + testBmp.getHeight());
                     Log.i("TAG2", "width:" + testBmp.getWidth());
                    count++;
                 }
                 Log.i("count",""+count);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(chunkActivity.this, CameraActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
+    public class BackgroundTask extends AsyncTask<Bitmap, Void, Bitmap>{
+
+        @Override
+        protected Bitmap doInBackground(Bitmap... params) {
+            Bitmap testBmp = params[0];
+            Bitmap sub =null;
+            for (int j = 0; j <= (testBmp.getWidth() - 24); j++) {
+                for (int i = 0; i <= (testBmp.getHeight() - 24); i++) {
+                     sub = Bitmap.createBitmap(testBmp, j, i, 24, 24);
+
+                        //TODO do comparision of face here
+                }
+            }
+            return sub;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            dispImg.setImageBitmap(bitmap);
+        }
     }
 
     public void setHeight(int h){
